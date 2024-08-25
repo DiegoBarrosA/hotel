@@ -10,9 +10,9 @@ import java.util.List;
 public class RoomController {
     public static List<Room> rooms = new ArrayList<>();    
     public RoomController() {
-        rooms.add(new Room(1,"340","Suite",24,2,"Premium"));
-        rooms.add(new Room(2,"140","Suite",10,2,"Tourist"));
-        rooms.add(new Room(3,"130","Suite",1,1,"Premium"));
+        rooms.add(new Room(1,"340","Suite",24,2,"Premium",false));
+        rooms.add(new Room(2,"140","Suite",10,2,"Tourist",true));
+        rooms.add(new Room(3,"130","Suite",1,1,"Premium",false));
     }
     @GetMapping("/room")
     public List<Room> getRooms() {

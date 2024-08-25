@@ -7,6 +7,9 @@ public class Room {
     private int floor;
     private int beds;
     private String sector;
+    private Boolean available;
+
+
     public int getId() {
         return id;
     }
@@ -43,13 +46,22 @@ public class Room {
     public void setSector(String sector) {
         this.sector = sector;
     }
-    public Room(int id, String name, String type, int floor, int beds, String sector) {
+
+    public boolean getAvailable(){
+        return available;
+    };
+
+    public void setAvailable(Boolean available){
+        this.available = available; 
+    };
+    public Room(int id, String name, String type, int floor, int beds, String sector, Boolean available) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.floor = floor;
         this.beds = beds;
         this.sector = sector;
+        this.available = available;
     }
 
 }
