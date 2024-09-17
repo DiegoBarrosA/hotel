@@ -1,37 +1,42 @@
 package com.aburaya.hotel.service;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.aburaya.hotel.model.Booking;
 import com.aburaya.hotel.repository.BookingRepository;
 import java.util.List;
 
-
+import java.util.Optional;
 @Service
 public class BookingServiceImpl implements BookingService{
-    private final BookingRepository bookingRepository = new BookingRepository();
-
+@Autowired
+private BookingRepository bookingRepository;
     @Override
     public List<Booking> getAllBookings(){
         return bookingRepository.findAll();
     }
 
     @Override
-    public void createBooking(Booking booking) {
-        bookingRepository.addBooking(booking);
+    public Booking createBooking(Booking booking) {
+      return  bookingRepository.save(booking);
     }
     
     @Override
-    public Booking getBookingById(int id) {
-        return bookingRepository.findBookingById(id);
+    public Optional<Booking>  getBookingById(Integer id) {
+        return bookingRepository.findById(id);
+    }
+ 
+    @Override
+    public Booking updateBooking(Integer id, Booking booking) {
+
+        if(bookingRepository.existsById(id)){
+            booking.setId(id);
+            return bookingRepository.save(booking);
+        }else{return null; }
     }
 
     @Override
-    public void updateBooking(int id, Booking booking) {
-        bookingRepository.updateBooking(id, booking);
-    }
-
-    @Override
-    public void deleteBooking(int id) {
-        bookingRepository.deleteBooking(id);
+    public void deleteBooking(Integer id) {
+        bookingRepository.deleteById(id);
     }
 
 }

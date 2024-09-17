@@ -9,38 +9,38 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
-import com.aburaya.hotel.service.BookingService;
-import com.aburaya.hotel.model.Booking;
+import com.aburaya.hotel.service.GuestService;
+import com.aburaya.hotel.model.Guest;
 
 import lombok.RequiredArgsConstructor;
 import java.util.Optional;
 @RestController
-@RequestMapping("/api/booking")
+@RequestMapping("/api/guest")
 @RequiredArgsConstructor
-public class BookingController {
-    private final BookingService bookingService;
+public class GuestController {
+    private final GuestService guestService;
 
     @GetMapping
-    public List<Booking> getAllBookings() {
-        return bookingService.getAllBookings();
+    public List<Guest> getAllGuests() {
+        return guestService.getAllGuests();
     }
     @GetMapping("/{id}")
-    public Optional<Booking>  getBookingById(@PathVariable Integer id) {
+    public Optional<Guest>  getGuestById(@PathVariable Integer id) {
 
-        return bookingService.getBookingById(id);
+        return guestService.getGuestById(id);
     }
     @PostMapping
-    public Booking createBookingEntity(@RequestBody Booking booking) {
+    public Guest createGuestEntity(@RequestBody Guest guest) {
        
-        return   bookingService.createBooking(booking);
+        return   guestService.createGuest(guest);
     }
     @PutMapping("/{id}")
-    public Booking  updateUser(@PathVariable Integer id, @RequestBody Booking booking) {
+    public Guest  updateUser(@PathVariable Integer id, @RequestBody Guest guest) {
 
-        return bookingService.updateBooking(id, booking);
+        return guestService.updateGuest(id, guest);
     }
     @DeleteMapping("/{id}")
-    public void deleteBooking(@PathVariable Integer id) {
-         bookingService.deleteBooking(id);
+    public void deleteGuest(@PathVariable Integer id) {
+         guestService.deleteGuest(id);
     }
 }

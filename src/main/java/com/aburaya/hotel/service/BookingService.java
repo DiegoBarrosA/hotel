@@ -2,14 +2,16 @@ package com.aburaya.hotel.service;
 
 
 import java.util.List;
+
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 import com.aburaya.hotel.model.Booking;
 
 @Service
 public interface BookingService {
     List<Booking> getAllBookings();
-    void createBooking(Booking booking);
-    Booking getBookingById(int id);
-    void updateBooking(int id, Booking booking);
-    void deleteBooking(int id);
+    Booking createBooking(Booking booking);
+    Optional<Booking> getBookingById(Integer id);
+    Booking updateBooking(Integer id, Booking booking);
+    void deleteBooking(Integer id);
 }
