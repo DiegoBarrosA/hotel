@@ -1,4 +1,4 @@
-package com.aburaya.hotel.service;
+package com.aburaya.hotel.service.booking;
 
 
 import java.util.List;

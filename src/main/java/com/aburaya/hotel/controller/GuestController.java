@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
-import com.aburaya.hotel.service.GuestService;
+
 import com.aburaya.hotel.model.Guest;
+import com.aburaya.hotel.service.guest.GuestService;
 
 import lombok.RequiredArgsConstructor;
 import java.util.Optional;

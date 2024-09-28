@@ -1,4 +1,4 @@
-package com.aburaya.hotel.service;
+package com.aburaya.hotel.service.booking;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.aburaya.hotel.model.Booking;

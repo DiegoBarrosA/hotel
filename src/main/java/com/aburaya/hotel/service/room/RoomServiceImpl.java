@@ -1,8 +1,9 @@
-package com.aburaya.hotel.service;
+package com.aburaya.hotel.service.room;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.aburaya.hotel.model.Room;
 import com.aburaya.hotel.repository.RoomRepository;
+
 import java.util.List;
 
 import java.util.Optional;

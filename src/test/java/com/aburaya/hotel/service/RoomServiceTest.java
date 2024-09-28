@@ -1,4 +1,4 @@
-package com.aburaya.service;
+package com.aburaya.hotel.service;
 
 import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.any;
@@ -11,7 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import com.aburaya.hotel.repository.RoomRepository;
-import com.aburaya.hotel.service.RoomServiceImpl;
+import com.aburaya.hotel.service.room.RoomServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
 public class RoomServiceTest {
