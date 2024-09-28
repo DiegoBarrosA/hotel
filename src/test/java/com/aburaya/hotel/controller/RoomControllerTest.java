@@ -2,9 +2,7 @@ package com.aburaya.hotel.controller;
 
 import com.aburaya.hotel.api.request.RoomUpdateRequest;
 import com.aburaya.hotel.model.Room;
-import  com.aburaya.hotel.service.room.RoomService;
-
-
+import com.aburaya.hotel.service.room.RoomService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,7 +13,6 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -41,7 +38,6 @@ class RoomControllerTest {
         room.setId(1);
         room.setName("Test Room");
         room.setBeds(2);
-
         updateRequest = new RoomUpdateRequest();
         updateRequest.setName("updatedRoomName");
         updateRequest.setBeds(4);
