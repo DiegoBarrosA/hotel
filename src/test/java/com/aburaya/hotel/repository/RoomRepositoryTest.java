@@ -15,7 +15,7 @@ import com.aburaya.hotel.model.Room;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 
-public class StudentRepositoryTest {
+public class RoomRepositoryTest {
     private static final Logger logger = LoggerFactory.getLogger(RoomController.class);
 
     @Autowired

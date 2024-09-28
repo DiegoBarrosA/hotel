@@ -10,11 +10,7 @@ import lombok.Data;
 @AllArgsConstructor
 @Builder
 public class RoomCreateRequest {
-   
    @NotNull
    @Size(max = 150)
    private String name;
-
-
-
 }

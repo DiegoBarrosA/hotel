@@ -1,6 +1,5 @@
 package com.aburaya.hotel.controller;
 
-import com.aburaya.hotel.api.request.RoomUpdateRequest;
 import com.aburaya.hotel.model.Room;
 import com.aburaya.hotel.service.room.RoomService;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,7 +29,6 @@ class RoomControllerTest {
     private RoomController roomController;
 
     private Room room;
-    private RoomUpdateRequest updateRequest;
 
     @BeforeEach
     void setUp() {
@@ -38,9 +36,7 @@ class RoomControllerTest {
         room.setId(1);
         room.setName("Test Room");
         room.setBeds(2);
-        updateRequest = new RoomUpdateRequest();
-        updateRequest.setName("updatedRoomName");
-        updateRequest.setBeds(4);
+
     }
 
     @SuppressWarnings("null")
