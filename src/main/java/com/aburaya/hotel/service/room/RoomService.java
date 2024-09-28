@@ -12,6 +12,7 @@ public interface RoomService {
     List<Room> getAllRooms();
     Room createRoom(Room room);
     Optional<Room> getRoomById(Integer id);
+    Room findRoomByName(String name);
     Room updateRoom(Integer id, Room room);
     void deleteRoom(Integer id);
 }

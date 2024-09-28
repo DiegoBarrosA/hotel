@@ -40,4 +40,9 @@ private RoomRepository roomRepository;
         roomRepository.deleteById(id);
     }
 
+    @Override
+    public Room findRoomByName(String name) {
+        throw new UnsupportedOperationException("Unimplemented method 'findRoomByName'");
+    }
+
 }

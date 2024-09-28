@@ -88,4 +88,20 @@ public class RoomController {
         roomService.deleteRoom(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+
+
+    @GetMapping("/name/{roomname}")
+    public ResponseEntity<EntityModel<Room>> getRoomByRoomname(@PathVariable String roomname) {
+        logger.info("Getting a room by roomname: {}", roomname);
+        Room room = roomService.findRoomByName(roomname);
+        if (room != null) {
+            EntityModel<Room> roomModel = EntityModel.of(room);
+            roomModel.add(linkTo(methodOn(RoomController.class).getRoomByRoomname(roomname)).withSelfRel());
+
+            return ResponseEntity.ok(roomModel);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }

@@ -9,15 +9,12 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @Builder
-public class PostCreateRequest {
+public class RoomCreateRequest {
    
    @NotNull
    @Size(max = 150)
-   private String caption;
+   private String name;
 
-   @NotNull
-   private String imageUrl;
 
-   @NotNull
-   private Long profileInfoId;
+
 }

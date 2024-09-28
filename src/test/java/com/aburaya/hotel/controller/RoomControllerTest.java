@@ -1,6 +1,6 @@
 package com.aburaya.hotel.controller;
 
-
+import com.aburaya.hotel.api.request.RoomUpdateRequest;
 import com.aburaya.hotel.model.Room;
 import  com.aburaya.hotel.service.room.RoomService;
 
@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -22,7 +21,6 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -40,19 +38,20 @@ class RoomControllerTest {
     @BeforeEach
     void setUp() {
         room = new Room();
-        room.setId(1L);
-        room.setRoomname("testroom");
-        room.setEmail("test@example.com");
+        room.setId(1);
+        room.setName("Test Room");
+        room.setBeds(2);
 
         updateRequest = new RoomUpdateRequest();
-        updateRequest.setRoomname("updatedRoom");
-        updateRequest.setEmail("updated@example.com");
+        updateRequest.setName("updatedRoomName");
+        updateRequest.setBeds(4);
     }
 
+    @SuppressWarnings("null")
     @Test
     void createRoom() {
         // Arrange
-        when(roomService.saveRoom(any(Room.class))).thenReturn(room);
+        when(roomService.createRoom(any(Room.class))).thenReturn(room);
 
         // Act
         ResponseEntity<EntityModel<Room>> response = roomController.createRoom(room);
@@ -63,16 +62,17 @@ class RoomControllerTest {
         assertNotNull(savedRoomModel);
         assertEquals(room.getId(), savedRoomModel.getContent().getId());
         assertTrue(savedRoomModel.hasLink("self"));
-        verify(roomService).saveRoom(any(Room.class));
+        verify(roomService).createRoom(any(Room.class));
     }
 
+    @SuppressWarnings("null")
     @Test
     void getRoomById_found() {
         // Arrange
-        when(roomService.findRoomById(1L)).thenReturn(Optional.of(room));
+        when(roomService.getRoomById(1)).thenReturn(Optional.of(room));
 
         // Act
-        ResponseEntity<EntityModel<Room>> response = roomController.getRoomById(1L);
+        ResponseEntity<EntityModel<Room>> response = roomController.getRoomById(1);
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -80,27 +80,28 @@ class RoomControllerTest {
         assertNotNull(foundRoomModel);
         assertEquals(room.getId(), foundRoomModel.getContent().getId());
         assertTrue(foundRoomModel.hasLink("self"));
-        verify(roomService).findRoomById(1L);
+        verify(roomService).getRoomById(1);
     }
 
     @Test
     void getRoomById_notFound() {
         // Arrange
-        when(roomService.findRoomById(1L)).thenReturn(Optional.empty());
+        when(roomService.getRoomById(1)).thenReturn(Optional.empty());
 
         // Act
-        ResponseEntity<EntityModel<Room>> response = roomController.getRoomById(1L);
+        ResponseEntity<EntityModel<Room>> response = roomController.getRoomById(1);
 
         // Assert
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         assertNull(response.getBody());
-        verify(roomService).findRoomById(1L);
+        verify(roomService).getRoomById(1);
     }
 
+    @SuppressWarnings("null")
     @Test
     void getRoomByRoomname_found() {
         // Arrange
-        when(roomService.findRoomByRoomname("testroom")).thenReturn(room);
+        when(roomService.findRoomByName("testroom")).thenReturn(room);
 
         // Act
         ResponseEntity<EntityModel<Room>> response = roomController.getRoomByRoomname("testroom");
@@ -109,15 +110,15 @@ class RoomControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         EntityModel<Room> foundRoomModel = response.getBody();
         assertNotNull(foundRoomModel);
-        assertEquals(room.getRoomname(), foundRoomModel.getContent().getRoomname());
+        assertEquals(room.getName(), foundRoomModel.getContent().getName());
         assertTrue(foundRoomModel.hasLink("self"));
-        verify(roomService).findRoomByRoomname("testroom");
+        verify(roomService).findRoomByName("testroom");
     }
 
     @Test
     void getRoomByRoomname_notFound() {
         // Arrange
-        when(roomService.findRoomByRoomname("testroom")).thenReturn(null);
+        when(roomService.findRoomByName("testroom")).thenReturn(null);
 
         // Act
         ResponseEntity<EntityModel<Room>> response = roomController.getRoomByRoomname("testroom");
@@ -125,85 +126,36 @@ class RoomControllerTest {
         // Assert
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         assertNull(response.getBody());
-        verify(roomService).findRoomByRoomname("testroom");
-    }
-
-    @Test
-    void getRoomByEmail_found() {
-        // Arrange
-        when(roomService.findRoomByEmail("test@example.com")).thenReturn(room);
-
-        // Act
-        ResponseEntity<EntityModel<Room>> response = roomController.getRoomByEmail("test@example.com");
-
-        // Assert
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        EntityModel<Room> foundRoomModel = response.getBody();
-        assertNotNull(foundRoomModel);
-        assertEquals(room.getEmail(), foundRoomModel.getContent().getEmail());
-        assertTrue(foundRoomModel.hasLink("self"));
-        verify(roomService).findRoomByEmail("test@example.com");
-    }
-
-    @Test
-    void getRoomByEmail_notFound() {
-        // Arrange
-        when(roomService.findRoomByEmail("test@example.com")).thenReturn(null);
-
-        // Act
-        ResponseEntity<EntityModel<Room>> response = roomController.getRoomByEmail("test@example.com");
-
-        // Assert
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-        assertNull(response.getBody());
-        verify(roomService).findRoomByEmail("test@example.com");
-    }
-
-    @Test
-    void patchRoom() {
-        // Arrange
-        when(roomService.updateRoom(eq(1L), any(RoomUpdateRequest.class))).thenReturn(room);
-
-        // Act
-        ResponseEntity<EntityModel<Room>> response = roomController.patchRoom(1L, updateRequest);
-
-        // Assert
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        EntityModel<Room> updatedRoomModel = response.getBody();
-        assertNotNull(updatedRoomModel);
-        assertEquals(room.getId(), updatedRoomModel.getContent().getId());
-        assertTrue(updatedRoomModel.hasLink("self"));
-        verify(roomService).updateRoom(eq(1L), any(RoomUpdateRequest.class));
+        verify(roomService).findRoomByName("testroom");
     }
 
     @Test
     void getAllRooms() {
         // Arrange
         List<Room> roomList = List.of(room);
-        when(roomService.findAllRooms()).thenReturn(roomList);
+        when(roomService.getAllRooms()).thenReturn(roomList);
 
         // Act
         ResponseEntity<CollectionModel<EntityModel<Room>>> response = roomController.getAllRooms();
         CollectionModel<EntityModel<Room>> foundRoomsModel = response.getBody();
-
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(foundRoomsModel);
         assertEquals(1, foundRoomsModel.getContent().size());
         assertTrue(foundRoomsModel.hasLink("self"));
-        verify(roomService).findAllRooms();
+        verify(roomService).getAllRooms();
     }
 
     @Test
     void deleteRoom() {
         // Arrange
-        doNothing().when(roomService).deleteRoomById(1L);
+        doNothing().when(roomService).deleteRoom(1);
 
         // Act
-        ResponseEntity<Void> response = roomController.deleteRoom(1L);
+        ResponseEntity<Void> response = roomController.deleteRoom(1);
 
         // Assert
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
-        verify(roomService).deleteRoomById(1L);
+        verify(roomService).deleteRoom(1);
     }
 }

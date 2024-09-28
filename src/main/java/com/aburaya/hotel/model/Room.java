@@ -2,6 +2,7 @@ package com.aburaya.hotel.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import org.springframework.hateoas.RepresentationModel;
@@ -13,11 +14,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+@Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "room")
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 public class Room extends RepresentationModel<Room> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
